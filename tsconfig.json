@@ -1,4 +1,11 @@
 {
+  "colors": {
+    "primary": "#1A2B42",
+    "secondary": "#FDD835",
+    "tertiary": "#333333",
+    "quaternary": "#CCCCCC",
+    "quinary": "#AAAAAA"
+  },
   "compilerOptions": {
     "target": "ES2017",
     "lib": ["dom", "dom.iterable", "esnext"],
