@@ -162,7 +162,7 @@ export default function DashboardShell({ children }: DashboardShellProps) {
 
         <div className="flex-1 flex flex-col min-h-screen pb-28 lg:pb-0">
           <header className="w-full max-w-6xl mx-auto px-4 pt-4 lg:px-8 xl:px-10 sticky top-0 z-30">
-            <div className="flex items-center justify-between rounded-2xl bg-white px-4 py-3 shadow-sm">
+            <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between rounded-2xl bg-white px-4 py-3 shadow-sm">
               <div className="flex items-center gap-3">
                 <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[#0B0B0D] text-sm font-semibold text-white">
                   {user?.name ? user.name.slice(0, 2).toUpperCase() : 'EV'}
@@ -178,7 +178,7 @@ export default function DashboardShell({ children }: DashboardShellProps) {
               <button
                 type="button"
                 onClick={handleLogout}
-                className="rounded-xl bg-[#D14343] px-4 py-2 text-sm font-semibold text-white transition hover:bg-[#b23535]"
+                className="w-full sm:w-auto rounded-xl bg-[#D14343] px-4 py-2 text-sm font-semibold text-white transition hover:bg-[#b23535]"
               >
                 Cerrar sesión
               </button>
