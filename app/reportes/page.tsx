@@ -383,7 +383,7 @@ export default function ReportesPage() {
                     </button>
                   </div>
 
-                  <div className="flex flex-col gap-2">
+                  {/* <div className="flex flex-col gap-2">
                     <div className="flex flex-wrap gap-2">
                       <button
                         type="button"
@@ -432,7 +432,7 @@ export default function ReportesPage() {
                       </button>
                     </div>
                     {exportError && <p className="text-sm text-red-600">{exportError}</p>}
-                  </div>
+                  </div> */}
                 </div>
               </form>
             </div>
