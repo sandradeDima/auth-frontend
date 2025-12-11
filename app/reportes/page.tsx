@@ -439,11 +439,58 @@ export default function ReportesPage() {
 
             <div className="rounded-2xl bg-white p-6 shadow-lg">
               <div className="flex flex-col gap-3 pb-4 lg:flex-row lg:items-center lg:justify-between">
-                <div className="flex items-center gap-3">
+                <div className="flex flex-wrap items-center gap-3">
                   <p className="text-sm font-semibold text-[#333333]">Resultados</p>
                   <span className="rounded-full bg-[#E9F5FF] px-3 py-1 text-xs font-semibold text-[#1A2B42]">
                     {filteredReportes.length}
                   </span>
+                  <div className="flex flex-wrap gap-2">
+                    <button
+                      type="button"
+                      onClick={() => handleExport('excel')}
+                      disabled={exporting === 'excel'}
+                      className="flex items-center gap-2 rounded-xl border border-[#E5E7EB] px-4 py-2 text-sm font-semibold text-[#0B0B0D] transition enabled:hover:bg-[#f7f3eb] disabled:opacity-60"
+                    >
+                      {exporting === 'excel' ? (
+                        <span className="h-4 w-4 animate-spin rounded-full border-2 border-[#0B0B0D] border-t-transparent" />
+                      ) : (
+                        <svg
+                          viewBox="0 0 24 24"
+                          className="h-5 w-5"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                        >
+                          <path d="M17 2H7a2 2 0 0 0-2 2v16l7-3 7 3V4a2 2 0 0 0-2-2Z" />
+                        </svg>
+                      )}
+                      Exportar Excel
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => handleExport('pdf')}
+                      disabled={exporting === 'pdf'}
+                      className="flex items-center gap-2 rounded-xl border border-[#E5E7EB] px-4 py-2 text-sm font-semibold text-[#0B0B0D] transition enabled:hover:bg-[#f7f3eb] disabled:opacity-60"
+                    >
+                      {exporting === 'pdf' ? (
+                        <span className="h-4 w-4 animate-spin rounded-full border-2 border-[#0B0B0D] border-t-transparent" />
+                      ) : (
+                        <svg
+                          viewBox="0 0 24 24"
+                          className="h-5 w-5"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                        >
+                          <path d="M6 2h9l5 5v11a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2Z" />
+                          <path d="M14 2v4a2 2 0 0 0 2 2h4" />
+                          <path d="M12 18v-6" />
+                          <path d="M9 15h6" />
+                        </svg>
+                      )}
+                      Exportar PDF
+                    </button>
+                  </div>
                 </div>
                 <div className="flex items-center gap-2 text-xs text-[#666666]">
                   <label htmlFor="pageSize">Por página</label>

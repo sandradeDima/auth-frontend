@@ -20,8 +20,8 @@ export default function Home() {
   // Redirect if already authenticated
   useEffect(() => {
     if (!isLoading && isAuthenticated) {
-      console.log("Authenticated, redirecting to home");
-      router.push('/home');
+      console.log("Authenticated, redirecting to registros");
+      router.push('/registros');
     }else{
       console.log("Not authenticated, redirecting to login");
     }
@@ -56,7 +56,7 @@ export default function Home() {
         // Store login data in context and redirect
         console.log("Login successful, storing data and redirecting");
         login(response.data);
-        router.push('/home');
+        router.push('/registros');
       }else{
         console.log("Login failed, setting error");
         setError(response?.message || 'Login failed');
@@ -72,11 +72,11 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-white flex flex-col items-center justify-center p-4">
-      {/* Main Login Card */}
-      <div className="w-full max-w-5xl bg-[#0F0F12] border border-[#1F1F23] rounded-[24px] shadow-2xl overflow-hidden flex flex-col lg:flex-row">
-        {/* Left Panel */}
-        <div className="relative flex items-center justify-center p-10 lg:p-14 min-h-[320px] lg:min-h-[520px] lg:w-1/2 bg-linear-to-br from-[#0B0B0D] via-[#111016] to-[#1F1A10]">
+    <div className="h-dvh bg-[#0F0F12] flex flex-col overflow-hidden">
+      {/* Mobile/Tablet: Single column, Desktop: Side by side */}
+      <div className="flex-1 flex flex-col lg:flex-row w-full max-w-5xl mx-auto lg:my-auto lg:rounded-[24px] lg:border lg:border-[#1F1F23] lg:shadow-2xl lg:overflow-hidden lg:max-h-[90vh]">
+        {/* Left Panel - Hidden on mobile, visible on lg+ */}
+        <div className="hidden lg:flex relative items-center justify-center p-14 lg:w-1/2 bg-linear-to-br from-[#0B0B0D] via-[#111016] to-[#1F1A10]">
           <div className="absolute inset-0 opacity-30 bg-[radial-gradient(circle_at_20%_20%,rgba(212,175,55,0.35),transparent_30%),radial-gradient(circle_at_80%_30%,rgba(255,255,255,0.08),transparent_26%)]" />
           <div className="relative flex flex-col items-center gap-6 text-center">
             <div className="relative h-20 w-48">
@@ -95,10 +95,25 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Right Panel */}
-        <div className="bg-[#0F0F12] p-8 lg:p-12 flex-1 flex flex-col justify-center">
-          <div className="max-w-md mx-auto w-full space-y-6">
-            <div className="flex items-center gap-3">
+        {/* Right Panel - Full height on mobile */}
+        <div className="flex-1 flex flex-col justify-center px-6 py-8 sm:px-8 lg:p-12 bg-[#0F0F12]">
+          <div className="w-full max-w-sm mx-auto space-y-5">
+            {/* Mobile logo */}
+            <div className="flex flex-col items-center gap-4 lg:hidden mb-6">
+              <div className="relative h-14 w-36">
+                <Image
+                  src="/Assets/Images/logo espacio V-03.png"
+                  alt="Espacio V"
+                  fill
+                  className="object-contain"
+                  sizes="144px"
+                  priority
+                />
+              </div>
+            </div>
+
+            {/* Desktop logo bar */}
+            <div className="hidden lg:flex items-center gap-3">
               <div className="relative h-10 w-36 rounded-lg bg-white/90 px-2 py-1 shadow">
                 <Image
                   src="/Assets/Images/logo espacio sobre blanco.jpg"
@@ -110,15 +125,16 @@ export default function Home() {
               </div>
               <div className="h-px flex-1 bg-linear-to-r from-[#fcd34f] via-[#fcd34f]/60 to-transparent" />
             </div>
-            <div>
-              <h1 className="text-3xl lg:text-4xl font-bold text-white mb-2">Iniciar sesión</h1>
+
+            <div className="text-center lg:text-left">
+              <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white mb-1">Iniciar sesión</h1>
               <p className="text-sm text-[#A7AAB0]">
                 Accede al panel profesional de Espacio V.
               </p>
             </div>
 
-            <form onSubmit={handleSubmit} className="space-y-5">
-              <div className="flex flex-col gap-2">
+            <form onSubmit={handleSubmit} className="space-y-4">
+              <div className="flex flex-col gap-1.5">
                 <label htmlFor="email" className="text-sm font-medium text-[#E5E7EB]">
                   Email
                 </label>
@@ -128,12 +144,12 @@ export default function Home() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="tucorreo@ejemplo.com"
-                  className="w-full px-4 py-3 rounded-lg bg-white border border-[#E5E7EB] text-[#0B0B0D] placeholder:text-[#9CA3AF] focus:outline-none focus:ring-2 focus:ring-[#fcd34f] focus:border-transparent"
+                  className="w-full px-4 py-3 rounded-lg bg-white border border-[#E5E7EB] text-[#0B0B0D] placeholder:text-[#9CA3AF] focus:outline-none focus:ring-2 focus:ring-[#fcd34f] focus:border-transparent text-base"
                   required
                 />
               </div>
 
-              <div className="flex flex-col gap-2">
+              <div className="flex flex-col gap-1.5">
                 <label htmlFor="password" className="text-sm font-medium text-[#E5E7EB]">
                   Contraseña
                 </label>
@@ -143,31 +159,31 @@ export default function Home() {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="••••••••"
-                  className="w-full px-4 py-3 rounded-lg bg-white border border-[#E5E7EB] text-[#0B0B0D] placeholder:text-[#9CA3AF] focus:outline-none focus:ring-2 focus:ring-[#fcd34f] focus:border-transparent"
+                  className="w-full px-4 py-3 rounded-lg bg-white border border-[#E5E7EB] text-[#0B0B0D] placeholder:text-[#9CA3AF] focus:outline-none focus:ring-2 focus:ring-[#fcd34f] focus:border-transparent text-base"
                   required
                 />
               </div>
 
-              {error && <p className="text-red-600 text-sm">{error}</p>}
+              {error && <p className="text-red-500 text-sm text-center">{error}</p>}
 
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full bg-[#fcd34f] text-[#0B0B0D] font-semibold py-3 px-4 rounded-lg hover:bg-[#c19722] transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-[#fcd34f]/60 focus:ring-offset-2 focus:ring-offset-white disabled:opacity-70 shadow-lg shadow-[rgba(0,0,0,0.06)]"
+                className="w-full bg-[#fcd34f] text-[#0B0B0D] font-semibold py-3 px-4 rounded-lg hover:bg-[#c19722] transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-[#fcd34f]/60 focus:ring-offset-2 focus:ring-offset-[#0F0F12] disabled:opacity-70 shadow-lg"
               >
-                {isSubmitting ? <Spinner className="w-4 h-4 text-[#0B0B0D] mx-auto" /> : 'Entrar'}
+                {isSubmitting ? <Spinner className="w-5 h-5 text-[#0B0B0D] mx-auto" /> : 'Entrar'}
               </button>
             </form>
-          </div>
-        </div>
-      </div>
 
-      {/* Bottom Accent */}
-      <div className="mt-10 flex justify-center">
-        <div className="flex flex-col space-y-1">
-          <div className="w-10 h-[3px] bg-[#0B0B0D] rounded-sm translate-x-1" />
-          <div className="w-10 h-[3px] bg-[#fcd34f] rounded-sm" />
-          <div className="w-10 h-[3px] bg-[#0B0B0D] rounded-sm -translate-x-1" />
+            {/* Bottom Accent - mobile only */}
+            <div className="flex justify-center pt-4 lg:hidden">
+              <div className="flex flex-col space-y-1">
+                <div className="w-8 h-[2px] bg-[#fcd34f]/40 rounded-sm translate-x-0.5" />
+                <div className="w-8 h-[2px] bg-[#fcd34f] rounded-sm" />
+                <div className="w-8 h-[2px] bg-[#fcd34f]/40 rounded-sm -translate-x-0.5" />
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>

@@ -160,9 +160,36 @@ export default function DashboardShell({ children }: DashboardShellProps) {
           </nav>
         </aside>
 
-        <div className="flex-1 flex flex-col min-h-screen pb-28 lg:pb-0">
-          <header className="w-full max-w-6xl mx-auto px-4 pt-4 lg:px-8 xl:px-10 sticky top-0 z-30">
-            <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between rounded-2xl bg-white px-4 py-3 shadow-sm">
+        <div className="flex-1 flex flex-col min-h-screen pb-24 lg:pb-0">
+          {/* Mobile compact header */}
+          <header className="lg:hidden sticky top-0 z-30 bg-[#f7f3eb]/95 backdrop-blur-sm px-4 py-2">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <div className="flex h-8 w-8 items-center justify-center rounded-full bg-[#0B0B0D] text-xs font-semibold text-white">
+                  {user?.name ? user.name.slice(0, 2).toUpperCase() : 'EV'}
+                </div>
+                <span className="text-sm font-semibold text-[#1F2937] truncate max-w-[120px]">{user?.name ?? 'Usuario'}</span>
+                <span className="rounded-full bg-[#fcd34f]/40 px-2 py-0.5 text-[10px] font-semibold text-[#7a5b00]">
+                  {isAdmin ? 'Admin' : 'User'}
+                </span>
+              </div>
+              <button
+                type="button"
+                onClick={handleLogout}
+                className="flex h-8 w-8 items-center justify-center rounded-lg bg-[#D14343] text-white transition hover:bg-[#b23535]"
+                aria-label="Cerrar sesión"
+              >
+                <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+                  <polyline points="16 17 21 12 16 7" />
+                  <line x1="21" y1="12" x2="9" y2="12" />
+                </svg>
+              </button>
+            </div>
+          </header>
+          {/* Desktop header */}
+          <header className="hidden lg:block w-full max-w-6xl mx-auto px-4 pt-4 lg:px-8 xl:px-10 sticky top-0 z-30">
+            <div className="flex items-center justify-between rounded-2xl bg-white px-4 py-3 shadow-sm">
               <div className="flex items-center gap-3">
                 <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[#0B0B0D] text-sm font-semibold text-white">
                   {user?.name ? user.name.slice(0, 2).toUpperCase() : 'EV'}
@@ -178,7 +205,7 @@ export default function DashboardShell({ children }: DashboardShellProps) {
               <button
                 type="button"
                 onClick={handleLogout}
-                className="w-full sm:w-auto rounded-xl bg-[#D14343] px-4 py-2 text-sm font-semibold text-white transition hover:bg-[#b23535]"
+                className="rounded-xl bg-[#D14343] px-4 py-2 text-sm font-semibold text-white transition hover:bg-[#b23535]"
               >
                 Cerrar sesión
               </button>
@@ -229,23 +256,29 @@ function MobileBottomNav({
   const gridColsClass = slots.length === 5 ? 'grid-cols-5' : 'grid-cols-3';
 
   return (
-    <div className="lg:hidden fixed bottom-0 left-0 right-0 z-50">
-      <nav className="relative mx-auto max-w-3xl rounded-t-2xl bg-[#0B0B0D] shadow-[0_-12px_28px_rgba(0,0,0,0.28)] border-t border-[#1F1F23] px-5 pt-2 pb-6">
-        <div className={`grid ${gridColsClass} items-center text-center text-[11px] font-semibold text-[#E5E7EB]`}>
+    <div className="lg:hidden fixed bottom-0 left-0 right-0 z-50 safe-area-inset-bottom">
+      <nav className="relative mx-auto max-w-xl sm:max-w-2xl md:max-w-3xl rounded-t-3xl bg-linear-to-t from-[#0B0B0D] to-[#151518] shadow-[0_-16px_40px_rgba(0,0,0,0.35)] border-t border-[#2A2A2E] px-4 sm:px-6 pt-3 pb-5">
+        <div className={`grid ${gridColsClass} items-end text-center text-[11px] sm:text-xs font-semibold`}>
           {slots.map((slot, idx) =>
             slot && slot.item ? (
               <Link
                 key={slot.key}
                 href={slot.item.href}
-                className={`flex flex-col items-center gap-1.5 py-2 transition ${
-                  pathname === slot.item.href ? 'text-[#D4AF31]' : 'text-[#9CA3AF] hover:text-[#D4AF31]'
+                className={`group flex flex-col items-center gap-1 sm:gap-1.5 py-2 rounded-xl transition-all duration-200 ${
+                  pathname === slot.item.href
+                    ? 'text-[#D4AF31] scale-105'
+                    : 'text-[#9CA3AF] hover:text-[#D4AF31] hover:scale-105 active:scale-95'
                 }`}
               >
-                {slot.item.icon && <slot.item.icon className="h-5 w-5" />}
-                <span>{slot.item.label}</span>
+                <span className={`p-2 rounded-xl transition-colors ${
+                  pathname === slot.item.href ? 'bg-[#D4AF31]/15' : 'group-hover:bg-white/5'
+                }`}>
+                  {slot.item.icon && <slot.item.icon className="h-5 w-5 sm:h-6 sm:w-6" />}
+                </span>
+                <span className="truncate max-w-[72px] sm:max-w-none">{slot.item.label}</span>
               </Link>
             ) : (
-              <div key={`spacer-${idx}`} />
+              <div key={`spacer-${idx}`} className="w-16 sm:w-20" />
             )
           )}
         </div>
@@ -253,12 +286,12 @@ function MobileBottomNav({
         <Link
           href={registroItem.href}
           aria-label="Registro"
-          className="absolute left-1/2 -translate-x-1/2 -translate-y-8 w-16 h-16 rounded-full bg-linear-to-br from-[#D4AF31] to-[#b3861a] text-[#0B0B0D] flex items-center justify-center shadow-xl border-4 border-[#0B0B0D] active:scale-95 transition"
+          className="absolute left-1/2 bottom-full -translate-x-1/2 translate-y-3/4 w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-linear-to-br from-[#D4AF31] via-[#e6c84a] to-[#b3861a] text-[#0B0B0D] flex items-center justify-center shadow-[0_4px_20px_rgba(212,175,49,0.4)] border-4 border-[#0B0B0D] active:scale-90 hover:scale-105 transition-transform duration-200"
         >
           {registroItem.icon ? (
-            <registroItem.icon className="h-7 w-7" />
+            <registroItem.icon className="h-6 w-6 sm:h-7 sm:w-7" />
           ) : (
-            <span className="text-2xl">+</span>
+            <span className="text-2xl font-bold">+</span>
           )}
         </Link>
       </nav>
