@@ -151,7 +151,7 @@ export default function ClientesPage() {
     const maxButtons = 5;
     const half = Math.floor(maxButtons / 2);
     let start = Math.max(1, page - half);
-    let end = Math.min(pages, start + maxButtons - 1);
+    const end = Math.min(pages, start + maxButtons - 1);
 
     if (end - start + 1 < maxButtons) {
       start = Math.max(1, end - maxButtons + 1);
