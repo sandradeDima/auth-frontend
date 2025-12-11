@@ -16,6 +16,14 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Reportes Espacio-V",
   description: "Reportes Espacio-V",
+  manifest: "/manifest.json",
+  other: {
+    "apple-mobile-web-app-title": "EspacioV",
+  },
+};
+
+export const viewport = {
+  themeColor: "#0B0B0D",
 };
 
 export default function RootLayout({
